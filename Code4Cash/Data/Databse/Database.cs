@@ -10,16 +10,25 @@ namespace Code4Cash.Data.Databse
     {
         private readonly Code4CashDbContext _dbContext;
         private readonly Dictionary<Type, IRepository> _repositories;
+        private readonly bool _databseOwnsContext;
 
-        public Database()
+        public Database(Code4CashDbContext dbContext, bool databaseOwnsContext = true)
         {
-            _dbContext = new Code4CashDbContext();
+            _dbContext = dbContext;
+            _databseOwnsContext = databaseOwnsContext;
             _repositories = new Dictionary<Type, IRepository>();
+        }
+
+        public Database() : this(new Code4CashDbContext())
+        {
         }
 
         public void Dispose()
         {
-            _dbContext.Dispose();
+            if (_databseOwnsContext)
+            {
+                _dbContext.Dispose();
+            }
             _repositories.Clear();
         }
 
@@ -30,10 +39,10 @@ namespace Code4Cash.Data.Databse
             {
                 var repoType = typeof(Repository<T>);
                 var repoInstance = (Repository<T>) Activator.CreateInstance(repoType, _dbContext);
-                _repositories.Add(typeof(T),repoInstance);
+                _repositories.Add(typeof(T), repoInstance);
             }
 
-            return (Repository<T>)_repositories[typeof(T)];
+            return (Repository<T>) _repositories[typeof(T)];
         }
 
         public Repository<T> Repo<T>() where T : Entity

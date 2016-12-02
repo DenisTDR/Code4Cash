@@ -47,5 +47,21 @@ namespace Code4Cash.Data.Databse
             await _dbContext.SaveChangesAsync();
             return entity;
         }
+
+        public async Task<int> CountAsync(Func<TE, bool> condition)
+        {
+            var dbSet = _dbContext.Set<TE>();
+            return await dbSet.CountAsync(e => condition(e));
+        }
+
+        public int Count(Func<TE, bool> condition = null)
+        {
+            if (condition == null)
+            {
+                condition = e => true;
+            }
+            var dbSet = _dbContext.Set<TE>();
+            return dbSet.Count(condition);
+        }
     }
 }

@@ -146,25 +146,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612021930054_firstMigration.cs" />
-    <Compile Include="Migrations\201612021930054_firstMigration.Designer.cs">
-      <DependentUpon>201612021930054_firstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612021931177_added_name_to_meeting.cs" />
-    <Compile Include="Migrations\201612021931177_added_name_to_meeting.Designer.cs">
-      <DependentUpon>201612021931177_added_name_to_meeting.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612021946069_ddd.cs" />
-    <Compile Include="Migrations\201612021946069_ddd.Designer.cs">
-      <DependentUpon>201612021946069_ddd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612022014500_added_selector.cs" />
-    <Compile Include="Migrations\201612022014500_added_selector.Designer.cs">
-      <DependentUpon>201612022014500_added_selector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612022031076_updated-selector-length.cs" />
-    <Compile Include="Migrations\201612022031076_updated-selector-length.Designer.cs">
-      <DependentUpon>201612022031076_updated-selector-length.cs</DependentUpon>
+    <Compile Include="Migrations\201612022112161_firstMigration.cs" />
+    <Compile Include="Migrations\201612022112161_firstMigration.Designer.cs">
+      <DependentUpon>201612022112161_firstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -182,20 +166,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612021930054_firstMigration.resx">
-      <DependentUpon>201612021930054_firstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612021931177_added_name_to_meeting.resx">
-      <DependentUpon>201612021931177_added_name_to_meeting.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612021946069_ddd.resx">
-      <DependentUpon>201612021946069_ddd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612022014500_added_selector.resx">
-      <DependentUpon>201612022014500_added_selector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612022031076_updated-selector-length.resx">
-      <DependentUpon>201612022031076_updated-selector-length.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612022112161_firstMigration.resx">
+      <DependentUpon>201612022112161_firstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -7,13 +7,13 @@ namespace Code4Cash.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class updatedselectorlength : IMigrationMetadata
+    public sealed partial class firstMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updatedselectorlength));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(firstMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612022031076_updated-selector-length"; }
+            get { return "201612022112161_firstMigration"; }
         }
         
         string IMigrationMetadata.Source

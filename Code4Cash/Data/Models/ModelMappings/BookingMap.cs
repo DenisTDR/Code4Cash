@@ -6,6 +6,9 @@ namespace Code4Cash.Data.Models.ModelMappings
 {
     public class BookingMap : EntityMap<BookingEntity, BookingViewModel>
     {
-
+        public BookingMap()
+        {
+            HasRequired(booking => booking.MeetingRoom).WithMany(room => room.Bookings);
+        }
     }
 }

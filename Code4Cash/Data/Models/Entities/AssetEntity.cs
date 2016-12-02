@@ -1,4 +1,5 @@
-﻿using Code4Cash.Data.Models.Entities.Base;
+﻿using System.Collections.Generic;
+using Code4Cash.Data.Models.Entities.Base;
 
 namespace Code4Cash.Data.Models.Entities
 {
