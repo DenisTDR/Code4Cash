@@ -17,14 +17,14 @@ namespace Code4Cash.Data.Models.ModelMappings.Base
             configurationExpression.CreateMap<TE, TVm>().AfterMap((entity, viewModel) =>
             {
                 viewModel.Id = entity.Selector;
-            });
+            }).PreserveReferences();
         }
         public void ConfigureViewModelToEntityMapper(IMapperConfigurationExpression configurationExpression)
         {
             configurationExpression.CreateMap<TVm, TE>().AfterMap((viewModel, entity) =>
             {
                 entity.Selector = viewModel.Id;
-            });
+            }).PreserveReferences();
         }
 
         public static IEnumerable<Type> GetAllEntityMaps()

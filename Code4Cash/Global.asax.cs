@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.Net.Http.Formatting;
+using System.Web.Http;
+using Newtonsoft.Json;
 
 namespace Code4Cash
 {
@@ -8,6 +10,8 @@ namespace Code4Cash
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AutoMapperConfig.RegisterMappings();
+            
+            JsonContentNegotiator.JsonNegotiate();
         }
     }
 }
