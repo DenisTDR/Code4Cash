@@ -6,10 +6,11 @@ using System.Reflection;
 using AutoMapper;
 using Code4Cash.Data.Models.Entities.Base;
 using Code4Cash.Data.Models.ViewModels.Base;
+using Code4Cash.Misc;
 
 namespace Code4Cash.Data.Models.ModelMappings.Base
 {
-    public abstract class EntityMap<TE, TVm> : EntityTypeConfiguration<TE>, IEntityMap where TE : Entity
+    public abstract class EntityViewModelMap<TE, TVm> : EntityMap<TE>, IEntityViewModelMap where TE : Entity
         where TVm : ViewModel
     {
         public void ConfigureEntityToViewModelMapper(IMapperConfigurationExpression configurationExpression)
@@ -21,19 +22,14 @@ namespace Code4Cash.Data.Models.ModelMappings.Base
         }
         public void ConfigureViewModelToEntityMapper(IMapperConfigurationExpression configurationExpression)
         {
-            configurationExpression.CreateMap<TVm, TE>().AfterMap((viewModel, entity) =>
-            {
-                entity.Selector = viewModel.Id;
-            }).PreserveReferences();
+            configurationExpression.CreateMap<TVm, TE>()
+                .ForMember(te => te.Id, opt => opt.Ignore())
+                .AfterMap((viewModel, entity) =>
+                {
+                    entity.Selector = viewModel.Id;
+                });
         }
 
-        public static IEnumerable<Type> GetAllEntityMaps()
-        {
-            var list =
-                Assembly.GetExecutingAssembly()
-                    .GetTypes()
-                    .Where(type => type.IsSubclassOfGenericType(typeof(EntityMap<,>)));
-            return list;
-        }
+
     }
 }

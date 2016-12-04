@@ -13,11 +13,11 @@ namespace Code4Cash
         {
             Mapper.Initialize(cfg =>
             {
-                var mappingTypes = EntityMap<Entity, ViewModel>.GetAllEntityMaps();
+                var mappingTypes = EntityViewModelMap<Entity, ViewModel>.GetAllEntityMaps();
 
                 mappingTypes.ToList().ForEach(mappingType =>
                 {
-                    var entityMap = (IEntityMap)Activator.CreateInstance(mappingType);
+                    var entityMap = (IEntityViewModelMap)Activator.CreateInstance(mappingType);
                     entityMap.ConfigureEntityToViewModelMapper(cfg);
                     entityMap.ConfigureViewModelToEntityMapper(cfg);
                 });

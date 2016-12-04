@@ -5,7 +5,7 @@ using Code4Cash.Data.Models.ViewModels;
 
 namespace Code4Cash.Controllers
 {
-    public class BookingController: GenericController<BookingMap, BookingEntity, BookingViewModel>
+    public class BookingController: GenericController<BookingEntity, BookingViewModel>
     {
     }
 }

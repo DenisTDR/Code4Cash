@@ -4,7 +4,7 @@ using Code4Cash.Data.Models.ViewModels;
 
 namespace Code4Cash.Data.Models.ModelMappings
 {
-    public class BookingMap : EntityMap<BookingEntity, BookingViewModel>
+    public class BookingMap : EntityViewModelMap<BookingEntity, BookingViewModel>
     {
         public BookingMap()
         {

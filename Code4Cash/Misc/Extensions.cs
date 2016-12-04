@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Code4Cash
+namespace Code4Cash.Misc
 {
     public static class Extensions
     {

@@ -16,13 +16,8 @@ namespace Code4Cash.Data.Databse
     {
         public Code4CashDbContext()
         {
-            this.Configuration.ProxyCreationEnabled = true;
-            this.Configuration.LazyLoadingEnabled = true;
-
-            var objectContext = ((IObjectContextAdapter)this).ObjectContext;
-            objectContext.SavingChanges += SavingChanges;
+            this.ConfigAndEvents();
         }
-
 
         public new DbSet<TEntity> Set<TEntity>() where TEntity : Entity
         {
@@ -30,14 +25,12 @@ namespace Code4Cash.Data.Databse
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            var entityMapsTypes = EntityMap<Entity, ViewModel>.GetAllEntityMaps().ToList();
+            var entityMapsTypes = EntityMap<Entity>.GetAllEntityMaps().ToList();
 
             entityMapsTypes.ForEach(entityMapsType =>
             {
                 dynamic configurationInstance = Activator.CreateInstance(entityMapsType);
                 modelBuilder.Configurations.Add(configurationInstance);
-
-
             });
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             base.OnModelCreating(modelBuilder);
@@ -66,6 +59,15 @@ namespace Code4Cash.Data.Databse
                     ((Entity)entry.Entity).Updated = DateTime.Now;
                 }
             }
+        }
+
+        private void ConfigAndEvents()
+        {
+            this.Configuration.ProxyCreationEnabled = true;
+            this.Configuration.LazyLoadingEnabled = true;
+
+            var objectContext = ((IObjectContextAdapter)this).ObjectContext;
+            objectContext.SavingChanges += SavingChanges;
         }
     }
 }

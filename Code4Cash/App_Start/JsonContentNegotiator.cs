@@ -15,11 +15,7 @@ namespace Code4Cash
         public JsonContentNegotiator()
         {
             _jsonFormatter = new JsonMediaTypeFormatter();
-
-
-            var settings = _jsonFormatter.SerializerSettings;
-            settings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
-            settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            SetJsonSerializerSettings(_jsonFormatter);
         }
 
         public ContentNegotiationResult Negotiate(
@@ -34,8 +30,20 @@ namespace Code4Cash
 
         public static void JsonNegotiate()
         {
+            //don't remove the xmlSerializer because Swagger uses it.
+            SetJsonSerializerSettings(GlobalConfiguration.Configuration.Formatters.JsonFormatter);
 
-            GlobalConfiguration.Configuration.Services.Replace(typeof(IContentNegotiator), new JsonContentNegotiator());
+            //GlobalConfiguration.Configuration.Services.Replace(typeof(IContentNegotiator), new JsonContentNegotiator());
+        }
+
+        private static void SetJsonSerializerSettings(JsonMediaTypeFormatter jsonFormatter)
+        {
+            jsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            jsonFormatter.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+
+            jsonFormatter.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+
+            jsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }
     }
 }

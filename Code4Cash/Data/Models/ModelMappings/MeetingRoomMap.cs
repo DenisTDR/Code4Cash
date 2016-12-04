@@ -4,7 +4,7 @@ using Code4Cash.Data.Models.ViewModels;
 
 namespace Code4Cash.Data.Models.ModelMappings
 {
-    public class MeetingRoomMap:EntityMap<MeetingRoomEntity, MeetingRoomViewModel>
+    public class MeetingRoomMap:EntityViewModelMap<MeetingRoomEntity, MeetingRoomViewModel>
     {
     }
 }

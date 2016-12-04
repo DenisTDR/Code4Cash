@@ -4,7 +4,7 @@ using Code4Cash.Data.Models.ViewModels;
 
 namespace Code4Cash.Data.Models.ModelMappings
 {
-    public class AssetMap : EntityMap<AssetEntity, AssetViewModel>
+    public class AssetMap : EntityViewModelMap<AssetEntity, AssetViewModel>
     {
     }
 }

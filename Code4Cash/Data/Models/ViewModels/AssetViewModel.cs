@@ -1,4 +1,5 @@
-﻿using Code4Cash.Data.Models.ViewModels.Base;
+﻿using Code4Cash.Data.Models.Enums;
+using Code4Cash.Data.Models.ViewModels.Base;
 
 namespace Code4Cash.Data.Models.ViewModels
 {
@@ -6,5 +7,6 @@ namespace Code4Cash.Data.Models.ViewModels
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public AssetValue Value { get; set; }
     }
 }

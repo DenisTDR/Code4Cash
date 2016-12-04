@@ -2,7 +2,7 @@
 
 namespace Code4Cash.Data.Models.ModelMappings.Base
 {
-    public interface IEntityMap
+    public interface IEntityViewModelMap
     {
         void ConfigureEntityToViewModelMapper(IMapperConfigurationExpression configurationExpression);
         void ConfigureViewModelToEntityMapper(IMapperConfigurationExpression configurationExpression);

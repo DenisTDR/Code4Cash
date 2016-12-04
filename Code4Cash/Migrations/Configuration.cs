@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Code4Cash.Data.Databse;
 using Code4Cash.Data.Models.Entities;
+using Code4Cash.Data.Models.Entities.Users;
 
 namespace Code4Cash.Migrations
 {
@@ -24,7 +25,7 @@ namespace Code4Cash.Migrations
 
         private void SeedBookings()
         {
-            using (var db = new Database())
+            using (var db = new DatabaseUnit())
             {
                 var bookingsRepo = db.Repo<BookingEntity>();
                 if (bookingsRepo.Count() >= 4)
@@ -68,10 +69,10 @@ namespace Code4Cash.Migrations
         }
         private void SeedRooms()
         {
-            using (var db = new Database())
+            using (var db = new DatabaseUnit())
             {
                 var roomsRepo = db.Repo<MeetingRoomEntity>();
-                if (roomsRepo.Count(room => true) >= 3)
+                if (roomsRepo.Count() >= 3)
                 {
                     return;
                 }
@@ -90,10 +91,26 @@ namespace Code4Cash.Migrations
                 room3.Assets.Add(asset3);
                 room3.Assets.Add(asset4);
 
-                roomsRepo.Add(room1).Wait();
-                roomsRepo.Add(room2).Wait();
-                roomsRepo.Add(room3).Wait();
+                roomsRepo.Add(room1, room2, room3).Wait();
+            }
+        }
 
+        private void SeedRoles()
+        {
+            using (var db = new DatabaseUnit())
+            {
+                var rolesRepo = db.Repo<RoleEntity>();
+                if(rolesRepo.Count() >= 3)
+                {
+                    return;
+                }
+
+                var role1 = new RoleEntity {Name = "CEO", Power = 1};
+                var role2 = new RoleEntity {Name = "Manager", Power = 2};
+                var role3 = new RoleEntity {Name = "Developer", Power = 3};
+                var role4 = new RoleEntity {Name = "Tester", Power = 4};
+
+                rolesRepo.Add(role1, role2, role3, role4).Wait();
             }
         }
     }

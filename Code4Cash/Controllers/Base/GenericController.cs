@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -8,26 +9,38 @@ using Code4Cash.Data.Databse;
 using Code4Cash.Data.Models.Entities.Base;
 using Code4Cash.Data.Models.ModelMappings.Base;
 using Code4Cash.Data.Models.ViewModels.Base;
+using Code4Cash.Misc.Exceptions;
 
 namespace Code4Cash.Controllers.Base
 {
-    public class GenericController<TEm, TE, TVm> : ApiController
+    public class GenericController<TE, TVm> : ApiController
         where TE : Entity
         where TVm : ViewModel
-        where TEm : EntityMap<TE, TVm>
+//        where TEm : EntityViewModelMap<TE, TVm>
     {
-        private readonly Database _database;
+        private DatabaseUnit _databaseUnit;
 
         public GenericController()
         {
-            _database = new Database();
+            _databaseUnit = new DatabaseUnit();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _databaseUnit?.Dispose();
+                _databaseUnit = null;
+            }
+            base.Dispose(disposing);
+        }
+
 
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ViewModel>))]
         public async Task<IHttpActionResult> GetAll()
         {
-            var allE = await _database.Repo<TE>().All();
+            var allE = await Repo.All();
 
             var allVm = Mapper.Map<IEnumerable<TVm>>(allE);
 
@@ -38,7 +51,7 @@ namespace Code4Cash.Controllers.Base
         [ResponseType(typeof(ViewModel))]
         public async Task<IHttpActionResult> Get([FromUri] string id)
         {
-            var entity = await _database.Repo<TE>().GetOne(id);
+            var entity = await Repo.GetOne(id);
             if (entity == null)
             {
                 return NotFound();
@@ -47,6 +60,8 @@ namespace Code4Cash.Controllers.Base
             return Ok(viewModel);
         }
 
+        [HttpPost]
+        [ResponseType(typeof(ViewModel))]
         public async Task<IHttpActionResult> Add([FromBody] TVm viewModel)
         {
             if (!ModelState.IsValid)
@@ -54,11 +69,37 @@ namespace Code4Cash.Controllers.Base
                 return BadRequest(ModelState);
             }
             var entity = Mapper.Map<TE>(viewModel);
-            var repo = _database.Repo<TE>();
-            entity = await repo.Add(entity);
+
+            entity = await Repo.Add(entity);
             viewModel = Mapper.Map<TVm>(entity);
             return Created("", viewModel);
         }
 
+        public async Task<IHttpActionResult> Update([FromUri] string id, [FromBody] TVm viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var entity = Mapper.Map<TE>(viewModel);
+                entity = await Repo.Update(id, entity);
+
+                viewModel = Mapper.Map<TVm>(entity);
+                return Ok(viewModel);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        private Repository<TE> Repo => _databaseUnit.Repo<TE>();
     }
 }
