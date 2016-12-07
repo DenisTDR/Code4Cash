@@ -10,5 +10,7 @@ namespace Code4Cash.Data.Models.Entities.Users
     {
         public string Name { get; set; }
         public int Power { get; set; }
+
+        public RoleFunction Functions { get; set; }
     }
 }

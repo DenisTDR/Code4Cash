@@ -21,6 +21,7 @@ namespace Code4Cash.Migrations
         {
             SeedRooms();
             SeedBookings();
+            SeedRoles();
         }
 
         private void SeedBookings()
@@ -67,6 +68,7 @@ namespace Code4Cash.Migrations
                 bookingsRepo.Add(booking4).Wait();
             }
         }
+
         private void SeedRooms()
         {
             using (var db = new DatabaseUnit())
@@ -100,17 +102,23 @@ namespace Code4Cash.Migrations
             using (var db = new DatabaseUnit())
             {
                 var rolesRepo = db.Repo<RoleEntity>();
-                if(rolesRepo.Count() >= 3)
+                if (rolesRepo.Count() >= 3)
                 {
                     return;
                 }
 
-                var role1 = new RoleEntity {Name = "CEO", Power = 1};
-                var role2 = new RoleEntity {Name = "Manager", Power = 2};
-                var role3 = new RoleEntity {Name = "Developer", Power = 3};
-                var role4 = new RoleEntity {Name = "Tester", Power = 4};
+                var role1 = new RoleEntity { Name = "CEO", Power = 1, Functions = RoleFunction.All };
+                var role2 = new RoleEntity { Name = "Administrator", Power = 1, Functions = RoleFunction.All };
+                var role3 = new RoleEntity
+                {
+                    Name = "ProjectManager",
+                    Power = 2,
+                    Functions = RoleFunction.BookMeetingRooms
+                };
+                var role4 = new RoleEntity { Name = "Developer", Power = 3, Functions = RoleFunction.BookMeetingRooms };
+                var role5 = new RoleEntity { Name = "Tester", Power = 3, Functions = RoleFunction.BookMeetingRooms };
 
-                rolesRepo.Add(role1, role2, role3, role4).Wait();
+                rolesRepo.Add(role1, role2, role3, role4, role5).Wait();
             }
         }
     }

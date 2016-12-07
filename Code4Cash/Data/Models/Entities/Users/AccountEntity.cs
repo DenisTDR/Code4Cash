@@ -13,5 +13,6 @@ namespace Code4Cash.Data.Models.Entities.Users
         public virtual RoleEntity Role { get; set; }
         public virtual ProfileEntity Profile { get; set; }
         public virtual IList<SessionEntity> Sessions { get; set; }
+        public bool Active { get; set; }
     }
 }

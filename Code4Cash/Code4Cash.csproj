@@ -122,11 +122,12 @@
     <Compile Include="App_Start\JsonContentNegotiator.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AssetController.cs" />
+    <Compile Include="Controllers\Entities\AssetController.cs" />
     <Compile Include="Controllers\Base\GenericController.cs" />
-    <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\Entities\BookingController.cs" />
     <Compile Include="Controllers\DevController.cs" />
-    <Compile Include="Controllers\MeetingRoomController.cs" />
+    <Compile Include="Controllers\Entities\MeetingRoomController.cs" />
+    <Compile Include="Controllers\Users\UserController.cs" />
     <Compile Include="Data\Databse\Code4CashDbContext.cs" />
     <Compile Include="Data\Databse\DatabaseUnit.cs" />
     <Compile Include="Data\Databse\EntityUpdateHelper.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Data\Models\Entities\Users\AccountEntity.cs" />
     <Compile Include="Data\Models\Entities\Users\ProfileEntity.cs" />
     <Compile Include="Data\Models\Entities\Users\RoleEntity.cs" />
+    <Compile Include="Data\Models\Entities\Users\RoleFunction.cs" />
     <Compile Include="Data\Models\Entities\Users\SessionEntity.cs" />
     <Compile Include="Data\Models\Enums\AssetValue.cs" />
     <Compile Include="Data\Models\ModelMappings\AssetMap.cs" />
@@ -157,6 +159,7 @@
     <Compile Include="Data\Models\ViewModels\BookingViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\MeetingRoomViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\ProfileViewModel.cs" />
+    <Compile Include="Data\Models\ViewModels\Users\RegisterViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\RoleViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\SessionViewModel.cs" />
     <Compile Include="Migrations\201612041641433_added_asset_value.cs" />
@@ -166,6 +169,14 @@
     <Compile Include="Migrations\201612041741178_user_entites.cs" />
     <Compile Include="Migrations\201612041741178_user_entites.Designer.cs">
       <DependentUpon>201612041741178_user_entites.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612041801052_role_functions.cs" />
+    <Compile Include="Migrations\201612041801052_role_functions.Designer.cs">
+      <DependentUpon>201612041801052_role_functions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612041806023_added_active_property_account.cs" />
+    <Compile Include="Migrations\201612041806023_added_active_property_account.Designer.cs">
+      <DependentUpon>201612041806023_added_active_property_account.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\Attributes\Updatable.cs" />
     <Compile Include="Misc\CustomPropertyTypes.cs" />
@@ -211,6 +222,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612041741178_user_entites.resx">
       <DependentUpon>201612041741178_user_entites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612041801052_role_functions.resx">
+      <DependentUpon>201612041801052_role_functions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612041806023_added_active_property_account.resx">
+      <DependentUpon>201612041806023_added_active_property_account.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
