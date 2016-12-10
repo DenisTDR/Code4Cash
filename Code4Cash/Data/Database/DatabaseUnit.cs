@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Code4Cash.Data.Models.Entities.Base;
 
-namespace Code4Cash.Data.Databse
+namespace Code4Cash.Data.Database
 {
     public class DatabaseUnit : IDisposable
     {

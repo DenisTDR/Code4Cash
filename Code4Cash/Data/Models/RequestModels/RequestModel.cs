@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using Code4Cash.Data.Models.ViewModels.Base;
 
-namespace Code4Cash.Data.Models.ViewModels.Users
+namespace Code4Cash.Data.Models.RequestModels
 {
-    public class SessionViewModel : ViewModel
+    public class RequestModel<TVm> where TVm : ViewModel
     {
-        public DateTime Expiration { get; set; }
         public string Token { get; set; }
+        public TVm Data { get; set; }
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Web;
 using Code4Cash.Data.Models.Entities.Base;
 
-namespace Code4Cash.Data.Databse
+namespace Code4Cash.Data.Database
 {
     public interface IRepository
     {
-        Task<Entity> GetOneEntity(string selector);
+        Task<Entity> GetOneEntityBySelector(string selector);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Code4Cash.Data.Models.Entities.Base;
+using Code4Cash.Data.Models.Entities.Users;
 
 namespace Code4Cash.Data.Models.Entities
 {
@@ -8,5 +9,7 @@ namespace Code4Cash.Data.Models.Entities
         public virtual MeetingRoomEntity MeetingRoom { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+
+        public virtual AccountEntity Owner { get; set; }
     }
 }

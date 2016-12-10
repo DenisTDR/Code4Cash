@@ -13,14 +13,14 @@ namespace Code4Cash.Data.Models.ModelMappings.Base
     public abstract class EntityViewModelMap<TE, TVm> : EntityMap<TE>, IEntityViewModelMap where TE : Entity
         where TVm : ViewModel
     {
-        public void ConfigureEntityToViewModelMapper(IMapperConfigurationExpression configurationExpression)
+        public virtual void ConfigureEntityToViewModelMapper(IMapperConfigurationExpression configurationExpression)
         {
             configurationExpression.CreateMap<TE, TVm>().AfterMap((entity, viewModel) =>
             {
                 viewModel.Id = entity.Selector;
             }).PreserveReferences();
         }
-        public void ConfigureViewModelToEntityMapper(IMapperConfigurationExpression configurationExpression)
+        public virtual void ConfigureViewModelToEntityMapper(IMapperConfigurationExpression configurationExpression)
         {
             configurationExpression.CreateMap<TVm, TE>()
                 .ForMember(te => te.Id, opt => opt.Ignore())

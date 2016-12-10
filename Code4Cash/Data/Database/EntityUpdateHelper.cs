@@ -7,7 +7,7 @@ using System.Web;
 using Code4Cash.Data.Models.Entities.Base;
 using Code4Cash.Misc;
 
-namespace Code4Cash.Data.Databse
+namespace Code4Cash.Data.Database
 {
     public class EntityUpdateHelper<T> where T : Entity
     {
@@ -71,7 +71,7 @@ namespace Code4Cash.Data.Databse
             {
                 return false;
             }
-            valueToSet = databaseUnit.Repository(valueAsEntity.GetType()).GetOneEntity(valueAsEntity.Selector).Result;
+            valueToSet = databaseUnit.Repository(valueAsEntity.GetType()).GetOneEntityBySelector(valueAsEntity.Selector).Result;
             
             return true;
         }

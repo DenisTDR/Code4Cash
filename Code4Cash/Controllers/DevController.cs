@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
-using Code4Cash.Data.Databse;
+using Code4Cash.Data.Database;
 using Code4Cash.Data.Models.Entities;
 using Code4Cash.Data.Models.Entities.Base;
 using Code4Cash.Data.Models.ModelMappings.Base;

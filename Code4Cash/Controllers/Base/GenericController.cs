@@ -5,18 +5,20 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
-using Code4Cash.Data.Databse;
+using Code4Cash.Data.Database;
 using Code4Cash.Data.Models.Entities.Base;
+using Code4Cash.Data.Models.Entities.Users;
 using Code4Cash.Data.Models.ModelMappings.Base;
+using Code4Cash.Data.Models.RequestModels;
 using Code4Cash.Data.Models.ViewModels.Base;
 using Code4Cash.Misc.Exceptions;
+using Code4Cash.Misc.Filters;
 
 namespace Code4Cash.Controllers.Base
 {
     public class GenericController<TE, TVm> : ApiController
         where TE : Entity
         where TVm : ViewModel
-//        where TEm : EntityViewModelMap<TE, TVm>
     {
         private DatabaseUnit _databaseUnit;
 
@@ -38,7 +40,8 @@ namespace Code4Cash.Controllers.Base
 
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ViewModel>))]
-        public async Task<IHttpActionResult> GetAll()
+        [Auth(RoleFunction.None)]
+        public virtual async Task<IHttpActionResult> GetAll()
         {
             var allE = await Repo.All();
 
@@ -49,9 +52,10 @@ namespace Code4Cash.Controllers.Base
 
         [HttpGet]
         [ResponseType(typeof(ViewModel))]
-        public async Task<IHttpActionResult> Get([FromUri] string id)
+        [Auth(RoleFunction.None)]
+        public virtual async Task<IHttpActionResult> Get([FromUri] string id)
         {
-            var entity = await Repo.GetOne(id);
+            var entity = await Repo.GetOneBySelector(id);
             if (entity == null)
             {
                 return NotFound();
@@ -62,12 +66,14 @@ namespace Code4Cash.Controllers.Base
 
         [HttpPost]
         [ResponseType(typeof(ViewModel))]
-        public async Task<IHttpActionResult> Add([FromBody] TVm viewModel)
+        [Auth(RoleFunction.CanAddNewEntities)]
+        public virtual async Task<IHttpActionResult> Add([FromBody] RequestModel<TVm> requestModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var viewModel = requestModel.Data;
             var entity = Mapper.Map<TE>(viewModel);
 
             entity = await Repo.Add(entity);
@@ -75,13 +81,16 @@ namespace Code4Cash.Controllers.Base
             return Created("", viewModel);
         }
 
-        public async Task<IHttpActionResult> Update([FromUri] string id, [FromBody] TVm viewModel)
+        [HttpPost]
+        [ResponseType(typeof(ViewModel))]
+        [Auth(RoleFunction.CanUpdateEntities)]
+        public virtual async Task<IHttpActionResult> Update([FromUri] string id, [FromBody] RequestModel<TVm> requestModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            var viewModel = requestModel.Data;
             try
             {
                 var entity = Mapper.Map<TE>(viewModel);
@@ -100,6 +109,6 @@ namespace Code4Cash.Controllers.Base
             }
         }
 
-        private Repository<TE> Repo => _databaseUnit.Repo<TE>();
+        protected Repository<TE> Repo => _databaseUnit.Repo<TE>();
     }
 }

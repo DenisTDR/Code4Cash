@@ -114,6 +114,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\SwaggerUiPatch.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -128,11 +129,11 @@
     <Compile Include="Controllers\DevController.cs" />
     <Compile Include="Controllers\Entities\MeetingRoomController.cs" />
     <Compile Include="Controllers\Users\UserController.cs" />
-    <Compile Include="Data\Databse\Code4CashDbContext.cs" />
-    <Compile Include="Data\Databse\DatabaseUnit.cs" />
-    <Compile Include="Data\Databse\EntityUpdateHelper.cs" />
-    <Compile Include="Data\Databse\IRepository.cs" />
-    <Compile Include="Data\Databse\Repository.cs" />
+    <Compile Include="Data\Database\Code4CashDbContext.cs" />
+    <Compile Include="Data\Database\DatabaseUnit.cs" />
+    <Compile Include="Data\Database\EntityUpdateHelper.cs" />
+    <Compile Include="Data\Database\IRepository.cs" />
+    <Compile Include="Data\Database\Repository.cs" />
     <Compile Include="Data\Models\Entities\AssetEntity.cs" />
     <Compile Include="Data\Models\Entities\Base\Entity.cs" />
     <Compile Include="Data\Models\Entities\Base\IEntity.cs" />
@@ -154,14 +155,18 @@
     <Compile Include="Data\Models\ModelMappings\Users\ProfileMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Users\RoleMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Users\SessionMap.cs" />
+    <Compile Include="Data\Models\RequestModels\LoginRequestModel.cs" />
+    <Compile Include="Data\Models\RequestModels\RegisterRequestModel.cs" />
+    <Compile Include="Data\Models\RequestModels\RequestModel.cs" />
     <Compile Include="Data\Models\ViewModels\AssetViewModel.cs" />
+    <Compile Include="Data\Models\ViewModels\Base\EmptyViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Base\ViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\BookingViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\MeetingRoomViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\ProfileViewModel.cs" />
-    <Compile Include="Data\Models\ViewModels\Users\RegisterViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\RoleViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\SessionViewModel.cs" />
+    <Compile Include="Data\Users\AuthLayer.cs" />
     <Compile Include="Migrations\201612041641433_added_asset_value.cs" />
     <Compile Include="Migrations\201612041641433_added_asset_value.Designer.cs">
       <DependentUpon>201612041641433_added_asset_value.cs</DependentUpon>
@@ -177,6 +182,10 @@
     <Compile Include="Migrations\201612041806023_added_active_property_account.cs" />
     <Compile Include="Migrations\201612041806023_added_active_property_account.Designer.cs">
       <DependentUpon>201612041806023_added_active_property_account.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612071018070_owner_to_booking.cs" />
+    <Compile Include="Migrations\201612071018070_owner_to_booking.Designer.cs">
+      <DependentUpon>201612071018070_owner_to_booking.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\Attributes\Updatable.cs" />
     <Compile Include="Misc\CustomPropertyTypes.cs" />
@@ -194,6 +203,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Misc\Exceptions\NotFoundException.cs" />
+    <Compile Include="Misc\Filters\AuthAttribute.cs" />
     <Compile Include="Misc\ReflectionExtensions.cs" />
     <Compile Include="Misc\Utilis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -228,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612041806023_added_active_property_account.resx">
       <DependentUpon>201612041806023_added_active_property_account.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612071018070_owner_to_booking.resx">
+      <DependentUpon>201612071018070_owner_to_booking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -12,6 +12,8 @@ namespace Code4Cash.Data.Models.Entities.Users
         ChangeMeetingRoomAssets = 1,
         BookMeetingRooms = 2,
         CanChangeRoles = 4,
-        All = 7
+        CanAddNewEntities = 8,
+        CanUpdateEntities = 16,
+        All = 31
     }
 }

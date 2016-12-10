@@ -1,7 +1,11 @@
+using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Description;
 using WebActivatorEx;
 using Code4Cash;
+using Code4Cash.Misc.Filters;
 using Swashbuckle.Application;
+using Swashbuckle.Swagger;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -12,8 +16,7 @@ namespace Code4Cash
         public static void Register()
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
-
-            GlobalConfiguration.Configuration 
+            GlobalConfiguration.Configuration
                 .EnableSwagger(c =>
                     {
                         // By default, the service root url is inferred from the request used to access the docs.
@@ -54,10 +57,10 @@ namespace Code4Cash
                         // you'll need to implement a custom IDocumentFilter and/or IOperationFilter to set these properties
                         // according to your specific authorization implementation
                         //
-                        //c.BasicAuth("basic")
-                        //    .Description("Basic HTTP Authentication");
+                        c.BasicAuth("basic")
+                            .Description("Basic HTTP Authentication");
                         //
-						// NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
+                        // NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
                         //c.ApiKey("apiKey")
                         //    .Description("API Key Authentication")
                         //    .Name("apiKey")
@@ -153,6 +156,9 @@ namespace Code4Cash
                         // to execute the operation
                         //
                         //c.OperationFilter<AssignOAuth2SecurityRequirements>();
+                        c.OperationFilter<AddAuthorizationHeaderParameterOperationFilter>();
+
+
 
                         // Post-modify the entire Swagger document by wiring up one or more Document filters.
                         // This gives full control to modify the final SwaggerDocument. You should have a good understanding of
@@ -186,6 +192,8 @@ namespace Code4Cash
                         // "Logical Name" is passed to the method as shown above.
                         //
                         //c.InjectJavaScript(thisAssembly, "Swashbuckle.Dummy.SwaggerExtensions.testScript1.js");
+                        c.InjectJavaScript(thisAssembly, "Code4Cash.Assets.SwaggerUiPatch.js");
+
 
                         // The swagger-ui renders boolean data types as a dropdown. By default, it provides "true" and "false"
                         // strings as the possible choices. You can use this option to change these to something else,
@@ -240,7 +248,31 @@ namespace Code4Cash
                         // "apiKeyIn" can either be "query" or "header"                                                
                         //
                         //c.EnableApiKeySupport("apiKey", "header");
+
                     });
+        }
+    }
+
+    public class AddAuthorizationHeaderParameterOperationFilter : IOperationFilter
+    {
+        public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
+        {
+            if (apiDescription.ActionDescriptor.GetCustomAttributes<AuthAttribute>().Count == 0)
+            {
+                return;
+            }
+            if (operation.parameters == null)
+            {
+                operation.parameters = new List<Parameter>();
+            }
+            operation.parameters?.Add(new Parameter
+            {
+                name = "Authorization",
+                @in = "header",
+                description = "authorization token",
+                required = true,
+                type = "string"
+            });
         }
     }
 }

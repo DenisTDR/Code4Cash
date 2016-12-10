@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using Code4Cash.Data.Models.Entities.Users;
 
-namespace Code4Cash.Data.Models.ViewModels.Users
+namespace Code4Cash.Data.Models.RequestModels
 {
-    public class RegisterViewModel
+    public class RegisterRequestModel
     {
         public string Email { get; set; }
         public string Password { get; set; }

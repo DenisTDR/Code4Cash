@@ -11,7 +11,7 @@ namespace Code4Cash.Data.Models.ModelMappings.Users
     {
         public AccountMap()
         {
-//            HasOptional(a => a.Profile).WithOptionalPrincipal();
+            HasOptional(a => a.Role).WithOptionalPrincipal();
         }
     }
 }

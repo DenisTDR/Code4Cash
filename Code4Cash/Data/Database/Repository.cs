@@ -13,7 +13,7 @@ using Code4Cash.Misc;
 using Code4Cash.Misc.Attributes;
 using Code4Cash.Misc.Exceptions;
 
-namespace Code4Cash.Data.Databse
+namespace Code4Cash.Data.Database
 {
     public class Repository<TE>: IRepository where TE: Entity
     {
@@ -33,7 +33,7 @@ namespace Code4Cash.Data.Databse
             return all;
         }
 
-        public async Task<TE> GetOne(string selector)
+        public async Task<TE> GetOneBySelector(string selector)
         {
             var dbSet = _dbContext.Set<TE>();
             var obj =
@@ -43,9 +43,15 @@ namespace Code4Cash.Data.Databse
             return obj;
         }
 
-        public async Task<Entity> GetOneEntity(string selector)
+        public async Task<TE> GetOne(Func<TE, bool> condition)
         {
-            return await this.GetOne(selector);
+            var dbSet = _dbContext.Set<TE>();
+            return (await dbSet.ToListAsync()).FirstOrDefault(condition);
+        }
+
+        public async Task<Entity> GetOneEntityBySelector(string selector)
+        {
+            return await this.GetOneBySelector(selector);
         }
 
         public async Task<TE> Add(TE entity)
@@ -84,7 +90,7 @@ namespace Code4Cash.Data.Databse
 
         public async Task<TE> Update(string selector, TE entity)
         {
-            var existing = await this.GetOne(selector);
+            var existing = await this.GetOneBySelector(selector);
             if (existing == null)
             {
                 throw new NotFoundException();
@@ -102,12 +108,12 @@ namespace Code4Cash.Data.Databse
             }
             if (type == typeof(TE))
             {
-                return await this.GetOne(selector);
+                return await this.GetOneBySelector(selector);
             }
 
             var typeRepo = this.DatabaseUnit.Repository(type);
             
-            var entity = await typeRepo.GetOneEntity(selector);
+            var entity = await typeRepo.GetOneEntityBySelector(selector);
             
             return entity;
         }

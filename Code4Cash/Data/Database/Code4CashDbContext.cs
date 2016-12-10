@@ -9,7 +9,7 @@ using Code4Cash.Data.Models.ModelMappings.Base;
 using Code4Cash.Data.Models.ViewModels.Base;
 using MySql.Data.Entity;
 
-namespace Code4Cash.Data.Databse
+namespace Code4Cash.Data.Database
 {
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class Code4CashDbContext: DbContext

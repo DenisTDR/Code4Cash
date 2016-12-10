@@ -2,15 +2,16 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Code4Cash.Data.Databse;
+using Code4Cash.Data.Database;
 using Code4Cash.Data.Models.Entities;
 using Code4Cash.Data.Models.Entities.Users;
+using Code4Cash.Misc;
 
 namespace Code4Cash.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Code4Cash.Data.Databse.Code4CashDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Code4Cash.Data.Database.Code4CashDbContext>
     {
         public Configuration()
         {
@@ -20,8 +21,9 @@ namespace Code4Cash.Migrations
         protected override void Seed(Code4CashDbContext context)
         {
             SeedRooms();
-            SeedBookings();
             SeedRoles();
+            SeedAccounts();
+            SeedBookings();
         }
 
         private void SeedBookings()
@@ -117,8 +119,37 @@ namespace Code4Cash.Migrations
                 };
                 var role4 = new RoleEntity { Name = "Developer", Power = 3, Functions = RoleFunction.BookMeetingRooms };
                 var role5 = new RoleEntity { Name = "Tester", Power = 3, Functions = RoleFunction.BookMeetingRooms };
+                var role6 = new RoleEntity { Name = "None", Power = 4, Functions = RoleFunction.None };
 
-                rolesRepo.Add(role1, role2, role3, role4, role5).Wait();
+                rolesRepo.Add(role6, role1, role2, role3, role4, role5).Wait();
+            }
+        }
+
+        private void SeedAccounts()
+        {
+            using (var db = new DatabaseUnit())
+            {
+                var accountsRepo = db.Repo<AccountEntity>();
+                if (accountsRepo.Count() >= 2)
+                {
+                    return;
+                }
+                var rolesRepo = db.Repo<RoleEntity>();
+                var roles = rolesRepo.All().Result.ToList();
+
+                var account1 = new AccountEntity
+                {
+                    Username = "tdr",
+                    Password = Utilis.CalculateMd5("parola01"),
+                    Role = roles[0]
+                };
+                var account2 = new AccountEntity
+                {
+                    Username = "tdrs",
+                    Password = Utilis.CalculateMd5("parola01"),
+                    Role = roles[3]
+                };
+                accountsRepo.Add(account1, account2).Wait();
             }
         }
     }
