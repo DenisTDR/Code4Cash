@@ -129,6 +129,9 @@
     <EmbeddedResource Include="Migrations\201612102138398_updateLog3.resx">
       <DependentUpon>201612102138398_updateLog3.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612102156559_updateLog4.resx">
+      <DependentUpon>201612102156559_updateLog4.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutoMapperConfig.cs" />
@@ -163,7 +166,7 @@
     <Compile Include="Data\Models\Entities\Users\RoleFunction.cs" />
     <Compile Include="Data\Models\Entities\Users\SessionEntity.cs" />
     <Compile Include="Data\Models\Enums\AssetValue.cs" />
-    <Compile Include="Data\Models\Entities\MeetingRoomPropertyUpdateLogEntity.cs" />
+    <Compile Include="Data\Models\Entities\BookingPropertyUpdateLogEntity.cs" />
     <Compile Include="Data\Models\ModelMappings\AssetMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Base\EntityMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Base\EntityViewModelMap.cs" />
@@ -172,7 +175,7 @@
     <Compile Include="Data\Models\Entities\FloorEntity.cs" />
     <Compile Include="Data\Models\ModelMappings\FloorMap.cs" />
     <Compile Include="Data\Models\ModelMappings\MeetingRoomMap.cs" />
-    <Compile Include="Data\Models\ModelMappings\MeetingRoomPropertyUpdateMap.cs" />
+    <Compile Include="Data\Models\ModelMappings\BookingPropertyUpdateMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Users\AccountMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Users\ProfileMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Users\RoleMap.cs" />
@@ -185,7 +188,7 @@
     <Compile Include="Data\Models\ViewModels\Base\ViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\BookingViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\FloorViewModel.cs" />
-    <Compile Include="Data\Models\ViewModels\MeetingRoomPropertyUpdateLogViewModel.cs" />
+    <Compile Include="Data\Models\ViewModels\BookingPropertyUpdateLogViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\MeetingRoomViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\ProfileViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\RoleViewModel.cs" />
@@ -206,6 +209,10 @@
     <Compile Include="Migrations\201612102138398_updateLog3.cs" />
     <Compile Include="Migrations\201612102138398_updateLog3.Designer.cs">
       <DependentUpon>201612102138398_updateLog3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612102156559_updateLog4.cs" />
+    <Compile Include="Migrations\201612102156559_updateLog4.Designer.cs">
+      <DependentUpon>201612102156559_updateLog4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseSeeder.cs" />
     <Compile Include="Misc\Attributes\Updatable.cs" />

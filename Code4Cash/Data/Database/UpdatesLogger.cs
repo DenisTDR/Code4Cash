@@ -13,8 +13,8 @@ namespace Code4Cash.Data.Database
     public class UpdatesLogger
     {
         private static readonly Random Rand = new Random(DateTime.Now.Millisecond);
-        public async Task StoreUpdates(MeetingRoomEntity oldE,
-            MeetingRoomEntity newE,
+        public async Task StoreUpdates(BookingEntity oldE,
+            BookingEntity newE,
             List<PropertyInfo> props, 
             DatabaseLayer dbLayer)
         {
@@ -22,11 +22,11 @@ namespace Code4Cash.Data.Database
             {
                 return;
             }
-            var repo = dbLayer.Repo<MeetingRoomPropertyUpdateLogEntity>();
+            var repo = dbLayer.Repo<BookingPropertyUpdateLogEntity>();
             var updateId = Rand.Next(1000, 10*1000);
             foreach (var propertyInfo in props)
             {
-                var updateLog = new MeetingRoomPropertyUpdateLogEntity
+                var updateLog = new BookingPropertyUpdateLogEntity
                 {
                     PropertyName = propertyInfo.Name,
                     OldValue = JsonConvert.SerializeObject(propertyInfo.GetValue(oldE)),

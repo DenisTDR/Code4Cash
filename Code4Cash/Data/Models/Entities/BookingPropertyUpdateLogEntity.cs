@@ -2,7 +2,7 @@
 
 namespace Code4Cash.Data.Models.Entities
 {
-    public class MeetingRoomPropertyUpdateLogEntity:Entity
+    public class BookingPropertyUpdateLogEntity:Entity
     {
         public virtual MeetingRoomEntity MeetingRoom { get; set; }
         public string PropertyName { get; set; }

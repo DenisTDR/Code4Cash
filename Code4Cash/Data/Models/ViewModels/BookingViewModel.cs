@@ -11,6 +11,6 @@ namespace Code4Cash.Data.Models.ViewModels
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
 
-        public IList<MeetingRoomPropertyUpdateLogViewModel> PropertyUpdates { get; set; }
+        public IList<BookingPropertyUpdateLogViewModel> PropertyUpdates { get; set; }
     }
 }

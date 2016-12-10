@@ -6,7 +6,7 @@ using Code4Cash.Data.Models.ViewModels.Base;
 
 namespace Code4Cash.Data.Models.ViewModels
 {
-    public class MeetingRoomPropertyUpdateLogViewModel:ViewModel
+    public class BookingPropertyUpdateLogViewModel:ViewModel
     {
         public virtual MeetingRoomViewModel MeetingRoom { get; set; }
         public string PropertyName { get; set; }

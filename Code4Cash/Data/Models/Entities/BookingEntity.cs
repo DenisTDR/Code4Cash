@@ -12,6 +12,6 @@ namespace Code4Cash.Data.Models.Entities
         public DateTime End { get; set; }
 
         public virtual AccountEntity Owner { get; set; }
-        public virtual IList<MeetingRoomPropertyUpdateLogEntity> PropertyUpdates { get; set; }
+        public virtual IList<BookingPropertyUpdateLogEntity> PropertyUpdates { get; set; }
     }
 }

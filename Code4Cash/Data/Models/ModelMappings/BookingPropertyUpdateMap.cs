@@ -8,7 +8,7 @@ using Code4Cash.Data.Models.ViewModels;
 
 namespace Code4Cash.Data.Models.ModelMappings
 {
-    public class MeetingRoomPropertyUpdateMap: EntityViewModelMap<MeetingRoomPropertyUpdateLogEntity, MeetingRoomPropertyUpdateLogViewModel>
+    public class BookingPropertyUpdateMap: EntityViewModelMap<BookingPropertyUpdateLogEntity, BookingPropertyUpdateLogViewModel>
     {
     }
 }

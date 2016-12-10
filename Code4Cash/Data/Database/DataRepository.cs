@@ -15,6 +15,7 @@ using Code4Cash.Data.Models.Entities.Base;
 using Code4Cash.Misc;
 using Code4Cash.Misc.Attributes;
 using Code4Cash.Misc.Exceptions;
+using Newtonsoft.Json;
 
 namespace Code4Cash.Data.Database
 {
@@ -100,10 +101,18 @@ namespace Code4Cash.Data.Database
             }
             if (typeof(TE) == entity.GetType())
             {
-                var updatedProps = await new EntityUpdateHelper<TE>().Update(entity, existing, this);
-                if (entity.GetType().IsAssignableFrom(typeof(MeetingRoomEntity)))
+                if (entity.GetType().IsAssignableFrom(typeof(BookingEntity)))
                 {
-                    await new UpdatesLogger().StoreUpdates((MeetingRoomEntity)(dynamic)entity, (MeetingRoomEntity)(dynamic)existing, updatedProps, DatabaseLayer);
+                    var old = JsonConvert.DeserializeObject<TE>(JsonConvert.SerializeObject(entity));
+                    var updatedProps = await new EntityUpdateHelper<TE>().Update(entity, existing, this);
+                    await
+                        new UpdatesLogger().StoreUpdates((BookingEntity) (dynamic)old,
+                            (BookingEntity) (dynamic) existing, updatedProps, DatabaseLayer);
+                }
+                else
+                {
+
+                    var updatedProps = await new EntityUpdateHelper<TE>().Update(entity, existing, this);
                 }
             }
             else
