@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using Code4Cash.Data.Models.Entities.Users;
@@ -11,7 +12,7 @@ namespace Code4Cash.Data.Models.ModelMappings.Users
     {
         public AccountMap()
         {
-            HasOptional(a => a.Role).WithOptionalPrincipal();
+            HasOptional(a => a.Role);
         }
     }
 }

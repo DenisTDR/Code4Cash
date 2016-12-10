@@ -7,13 +7,13 @@ namespace Code4Cash.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class added_asset_value : IMigrationMetadata
+    public sealed partial class updateLog3 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(added_asset_value));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updateLog3));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612041641433_added_asset_value"; }
+            get { return "201612102138398_updateLog3"; }
         }
         
         string IMigrationMetadata.Source

@@ -9,5 +9,6 @@ namespace Code4Cash.Data.Models.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public AssetValue Value { get; set; }
+        public virtual MeetingRoomEntity Room { get; set; }
     }
 }

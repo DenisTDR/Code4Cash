@@ -16,7 +16,7 @@ namespace Code4Cash.Data.Database
     {
         public Code4CashDbContext()
         {
-            this.ConfigAndEvents();
+            ConfigAndEvents();
         }
 
         public new DbSet<TEntity> Set<TEntity>() where TEntity : Entity
@@ -63,8 +63,8 @@ namespace Code4Cash.Data.Database
 
         private void ConfigAndEvents()
         {
-            this.Configuration.ProxyCreationEnabled = true;
-            this.Configuration.LazyLoadingEnabled = true;
+            Configuration.ProxyCreationEnabled = true;
+            Configuration.LazyLoadingEnabled = true;
 
             var objectContext = ((IObjectContextAdapter)this).ObjectContext;
             objectContext.SavingChanges += SavingChanges;

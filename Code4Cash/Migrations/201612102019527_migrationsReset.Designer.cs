@@ -7,13 +7,13 @@ namespace Code4Cash.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class role_functions : IMigrationMetadata
+    public sealed partial class migrationsReset : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(role_functions));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(migrationsReset));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612041801052_role_functions"; }
+            get { return "201612102019527_migrationsReset"; }
         }
         
         string IMigrationMetadata.Source

@@ -44,6 +44,7 @@ namespace Code4Cash
             jsonFormatter.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
 
             jsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            
         }
     }
 }

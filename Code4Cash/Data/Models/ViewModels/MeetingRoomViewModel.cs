@@ -7,6 +7,7 @@ namespace Code4Cash.Data.Models.ViewModels
     {
         public string Name { get; set; }
         public int? Capacity { get; set; }
+        public FloorViewModel Floor { get; set; }
         public List<AssetViewModel> Assets { get; set; } = new List<AssetViewModel>();
         public List<BookingViewModel> Bookings { get; set; } = new List<BookingViewModel>();
     }

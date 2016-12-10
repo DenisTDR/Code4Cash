@@ -10,9 +10,10 @@ namespace Code4Cash.Data.Models.Entities.Users
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public virtual RoleEntity Role { get; set; }
-        public virtual ProfileEntity Profile { get; set; }
-        public virtual IList<SessionEntity> Sessions { get; set; }
         public bool Active { get; set; }
+        public virtual IList<SessionEntity> Sessions { get; set; }
+        public virtual ProfileEntity Profile { get; set; }
+        public virtual RoleEntity Role { get; set; }
+        public virtual IList<MeetingRoomEntity> MeetingRooms { get; set; } = new List<MeetingRoomEntity>();
     }
 }

@@ -3,11 +3,14 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
+using Code4Cash.Data.Base;
+using Code4Cash.Data.Models.Entities;
 using Code4Cash.Data.Models.Entities.Base;
 using Code4Cash.Misc;
 using Code4Cash.Misc.Attributes;
@@ -15,19 +18,19 @@ using Code4Cash.Misc.Exceptions;
 
 namespace Code4Cash.Data.Database
 {
-    public class Repository<TE>: IRepository where TE: Entity
+    public class DataRepository<TE>: IGenericRepository<TE> where TE: Entity
     {
         private readonly Code4CashDbContext _dbContext;
-        public  DatabaseUnit DatabaseUnit { get; }
-        public Repository(Code4CashDbContext dbContext, DatabaseUnit databaseUnit)
+        public  DatabaseLayer DatabaseLayer { get; }
+        public DataRepository(Code4CashDbContext dbContext, DatabaseLayer databaseLayer)
         {
-            this._dbContext = dbContext;
-            this.DatabaseUnit = databaseUnit;
+            _dbContext = dbContext;
+            DatabaseLayer = databaseLayer;
         }
 
         public async Task<IEnumerable<TE>> All()
         {
-            var dbSet = this._dbContext.Set<TE>();
+            var dbSet = _dbContext.Set<TE>();
             var all = await dbSet.ToListAsync();
 
             return all;
@@ -51,7 +54,7 @@ namespace Code4Cash.Data.Database
 
         public async Task<Entity> GetOneEntityBySelector(string selector)
         {
-            return await this.GetOneBySelector(selector);
+            return await GetOneBySelector(selector);
         }
 
         public async Task<TE> Add(TE entity)
@@ -90,12 +93,25 @@ namespace Code4Cash.Data.Database
 
         public async Task<TE> Update(string selector, TE entity)
         {
-            var existing = await this.GetOneBySelector(selector);
+            var existing = await GetOneBySelector(selector);
             if (existing == null)
             {
                 throw new NotFoundException();
             }
-            var updatedProps = await new EntityUpdateHelper<TE>().Update(entity, existing, this);
+            if (typeof(TE) == entity.GetType())
+            {
+                var updatedProps = await new EntityUpdateHelper<TE>().Update(entity, existing, this);
+                if (entity.GetType().IsAssignableFrom(typeof(MeetingRoomEntity)))
+                {
+                    await new UpdatesLogger().StoreUpdates((MeetingRoomEntity)(dynamic)entity, (MeetingRoomEntity)(dynamic)existing, updatedProps, DatabaseLayer);
+                }
+            }
+            else
+            {
+                var dbSet = _dbContext.Set<TE>();
+                dbSet.AddOrUpdate(entity);
+                
+            }
 
             return existing;
         }
@@ -108,28 +124,28 @@ namespace Code4Cash.Data.Database
             }
             if (type == typeof(TE))
             {
-                return await this.GetOneBySelector(selector);
+                return await GetOneBySelector(selector);
             }
 
-            var typeRepo = this.DatabaseUnit.Repository(type);
+            var typeRepo = DatabaseLayer.Repository(type);
             
             var entity = await typeRepo.GetOneEntityBySelector(selector);
             
             return entity;
         }
         public void Attach(TE entity)
-        { 
-            this._dbContext.Set<TE>().Attach(entity);
+        {
+            _dbContext.Set<TE>().Attach(entity);
         }
 
         public void SetModifiedProperty(TE entity, string propertyName)
         {
-            var manager = ((IObjectContextAdapter)this._dbContext).ObjectContext.ObjectStateManager;
+            var manager = ((IObjectContextAdapter)_dbContext).ObjectContext.ObjectStateManager;
             manager.GetObjectStateEntry(entity).SetModifiedProperty(propertyName);
         }
         public async Task SaveChangesAsync()
         {
-            await this._dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

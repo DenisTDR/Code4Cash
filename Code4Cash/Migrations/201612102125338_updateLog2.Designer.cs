@@ -7,13 +7,13 @@ namespace Code4Cash.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class added_active_property_account : IMigrationMetadata
+    public sealed partial class updateLog2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(added_active_property_account));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updateLog2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612041806023_added_active_property_account"; }
+            get { return "201612102125338_updateLog2"; }
         }
         
         string IMigrationMetadata.Source

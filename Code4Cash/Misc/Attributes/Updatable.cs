@@ -10,7 +10,7 @@ namespace Code4Cash.Misc.Attributes
         public bool Updatable { get; set; }
         public UpdatableAttribute(bool updatable = true)
         {
-            this.Updatable = updatable;
+            Updatable = updatable;
         }
     }
 }

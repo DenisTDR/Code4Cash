@@ -12,11 +12,11 @@ namespace Code4Cash.Data.Database
     public class EntityUpdateHelper<T> where T : Entity
     {
 
-        public async Task<List<PropertyInfo>> Update(T source, T destination, Repository<T> repository)
+        public async Task<List<PropertyInfo>> Update(T source, T destination, DataRepository<T> dataRepository)
         {
             var list = new List<PropertyInfo>();
 
-            repository.Attach(destination);
+            dataRepository.Attach(destination);
 
 
             var props =
@@ -34,7 +34,7 @@ namespace Code4Cash.Data.Database
                 }
                 else if (propertyInfo.PropertyType.IsCustomEntity())
                 {
-                    set = UpdateEntityProperties(sourceValue, out valueToSet, repository.DatabaseUnit);
+                    set = UpdateEntityProperties(sourceValue, out valueToSet, dataRepository.DatabaseLayer);
                     skipTriggerRepo = true;
                 }
 
@@ -46,13 +46,13 @@ namespace Code4Cash.Data.Database
 
                     if (!skipTriggerRepo)
                     {
-                        repository.SetModifiedProperty(destination, propertyInfo.Name);
+                        dataRepository.SetModifiedProperty(destination, propertyInfo.Name);
                     }
                 }
             }
 
 
-            await repository.SaveChangesAsync();
+            await dataRepository.SaveChangesAsync();
             return list;
         }
 
@@ -63,7 +63,7 @@ namespace Code4Cash.Data.Database
             return !(value is DateTime) || (DateTime) value != DateTime.MinValue;
         }
 
-        private bool UpdateEntityProperties(object value, out object valueToSet, DatabaseUnit databaseUnit)
+        private bool UpdateEntityProperties(object value, out object valueToSet, DatabaseLayer databaseLayer)
         {
             valueToSet = null;
             var valueAsEntity = (Entity) value;
@@ -71,7 +71,7 @@ namespace Code4Cash.Data.Database
             {
                 return false;
             }
-            valueToSet = databaseUnit.Repository(valueAsEntity.GetType()).GetOneEntityBySelector(valueAsEntity.Selector).Result;
+            valueToSet = databaseLayer.Repository(valueAsEntity.GetType()).GetOneEntityBySelector(valueAsEntity.Selector).Result;
             
             return true;
         }

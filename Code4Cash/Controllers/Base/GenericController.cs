@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
+using Code4Cash.Data.Access;
+using Code4Cash.Data.Base;
 using Code4Cash.Data.Database;
 using Code4Cash.Data.Models.Entities.Base;
 using Code4Cash.Data.Models.Entities.Users;
 using Code4Cash.Data.Models.ModelMappings.Base;
 using Code4Cash.Data.Models.RequestModels;
 using Code4Cash.Data.Models.ViewModels.Base;
+using Code4Cash.Misc;
 using Code4Cash.Misc.Exceptions;
 using Code4Cash.Misc.Filters;
 
@@ -20,29 +24,39 @@ namespace Code4Cash.Controllers.Base
         where TE : Entity
         where TVm : ViewModel
     {
-        private DatabaseUnit _databaseUnit;
+
+        private IDataLayer _databaseLayer;
 
         public GenericController()
         {
-            _databaseUnit = new DatabaseUnit();
+            
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _databaseUnit?.Dispose();
-                _databaseUnit = null;
+                _databaseLayer?.Dispose();
+                _databaseLayer = null;
             }
             base.Dispose(disposing);
         }
 
+        private HttpRequestMessage _request = null;
+
+        private void InitDataLayer()
+        {
+            if (_databaseLayer != null || Request == null) return;
+            var accountId = AuthHelper.GetInstance().GetAccountId(Request);
+            _databaseLayer = new DataAccessLayer(accountId);
+        }
 
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ViewModel>))]
         [Auth(RoleFunction.None)]
         public virtual async Task<IHttpActionResult> GetAll()
         {
+            InitDataLayer();
             var allE = await Repo.All();
 
             var allVm = Mapper.Map<IEnumerable<TVm>>(allE);
@@ -55,6 +69,7 @@ namespace Code4Cash.Controllers.Base
         [Auth(RoleFunction.None)]
         public virtual async Task<IHttpActionResult> Get([FromUri] string id)
         {
+            InitDataLayer();
             var entity = await Repo.GetOneBySelector(id);
             if (entity == null)
             {
@@ -73,6 +88,7 @@ namespace Code4Cash.Controllers.Base
             {
                 return BadRequest(ModelState);
             }
+            InitDataLayer();
             var viewModel = requestModel.Data;
             var entity = Mapper.Map<TE>(viewModel);
 
@@ -90,6 +106,7 @@ namespace Code4Cash.Controllers.Base
             {
                 return BadRequest(ModelState);
             }
+            InitDataLayer();
             var viewModel = requestModel.Data;
             try
             {
@@ -103,12 +120,12 @@ namespace Code4Cash.Controllers.Base
             {
                 return NotFound();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                return BadRequest();
+                return InternalServerError(exc);
             }
         }
 
-        protected Repository<TE> Repo => _databaseUnit.Repo<TE>();
+        protected IGenericRepository<TE> Repo => _databaseLayer.Repo<TE>();
     }
 }

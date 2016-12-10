@@ -13,6 +13,7 @@ namespace Code4Cash.Data.Models.ModelMappings.Users
         public ProfileMap()
         {
             HasRequired(p => p.Account).WithOptional(a => a.Profile).WillCascadeOnDelete();
+            
         }
     }
 }

@@ -74,7 +74,7 @@ namespace Code4Cash.Controllers
             var meetingRoom = new MeetingRoomEntity();
             meetingRoom.Name = "una nouă";
             meetingRoom.Capacity = 12;
-            var repo = new DatabaseUnit().Repo<MeetingRoomEntity>();
+            var repo = new DatabaseLayer().Repo<MeetingRoomEntity>();
             var mr2 = await repo.Add(meetingRoom);
 
             return Ok(mr2);
@@ -84,7 +84,7 @@ namespace Code4Cash.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Test6()
         {
-            var db = new DatabaseUnit();
+            var db = new DatabaseLayer();
             var repo = db.Repo<BookingEntity>();
             var repo2 = db.Repo<MeetingRoomEntity>();
 
@@ -105,6 +105,19 @@ namespace Code4Cash.Controllers
             var props4 = ReflectionExtensions.GetPropeties<MeetingRoomEntity>(CustomPropertyTypes.Enumerable).Select(prop => prop.Name);
 
             return Ok(new [] {props1, props2, props3, props4});
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> Test8()
+        {
+
+            var mappingTypes =
+                EntityViewModelMap<Entity, ViewModel>.GetAllEntityMaps().ToList();
+
+            var types2 = mappingTypes
+                    .Where(type => typeof(IEntityViewModelMap).IsAssignableFrom(type));
+
+            return Ok(new {test1 = mappingTypes.Select(type => type.Name), test2 = types2.Select(type => type.Name)});
         }
     }
 }

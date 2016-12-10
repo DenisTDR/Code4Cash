@@ -117,6 +117,18 @@
     <EmbeddedResource Include="Assets\SwaggerUiPatch.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
+    <EmbeddedResource Include="Migrations\201612102019527_migrationsReset.resx">
+      <DependentUpon>201612102019527_migrationsReset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612102124266_updateLog.resx">
+      <DependentUpon>201612102124266_updateLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612102125338_updateLog2.resx">
+      <DependentUpon>201612102125338_updateLog2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612102138398_updateLog3.resx">
+      <DependentUpon>201612102138398_updateLog3.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutoMapperConfig.cs" />
@@ -129,11 +141,17 @@
     <Compile Include="Controllers\DevController.cs" />
     <Compile Include="Controllers\Entities\MeetingRoomController.cs" />
     <Compile Include="Controllers\Users\UserController.cs" />
+    <Compile Include="Data\Access\AccessHelper.cs" />
+    <Compile Include="Data\Access\AccessRepository.cs" />
+    <Compile Include="Data\Access\DataAccessLayer.cs" />
+    <Compile Include="Data\Base\IDataLayer.cs" />
     <Compile Include="Data\Database\Code4CashDbContext.cs" />
-    <Compile Include="Data\Database\DatabaseUnit.cs" />
+    <Compile Include="Data\Database\DatabaseLayer.cs" />
     <Compile Include="Data\Database\EntityUpdateHelper.cs" />
-    <Compile Include="Data\Database\IRepository.cs" />
-    <Compile Include="Data\Database\Repository.cs" />
+    <Compile Include="Data\Base\IGenericRepository.cs" />
+    <Compile Include="Data\Base\IRepository.cs" />
+    <Compile Include="Data\Database\DataRepository.cs" />
+    <Compile Include="Data\Database\UpdatesLogger.cs" />
     <Compile Include="Data\Models\Entities\AssetEntity.cs" />
     <Compile Include="Data\Models\Entities\Base\Entity.cs" />
     <Compile Include="Data\Models\Entities\Base\IEntity.cs" />
@@ -145,12 +163,16 @@
     <Compile Include="Data\Models\Entities\Users\RoleFunction.cs" />
     <Compile Include="Data\Models\Entities\Users\SessionEntity.cs" />
     <Compile Include="Data\Models\Enums\AssetValue.cs" />
+    <Compile Include="Data\Models\Entities\MeetingRoomPropertyUpdateLogEntity.cs" />
     <Compile Include="Data\Models\ModelMappings\AssetMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Base\EntityMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Base\EntityViewModelMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Base\IEntityViewModelMap.cs" />
     <Compile Include="Data\Models\ModelMappings\BookingMap.cs" />
+    <Compile Include="Data\Models\Entities\FloorEntity.cs" />
+    <Compile Include="Data\Models\ModelMappings\FloorMap.cs" />
     <Compile Include="Data\Models\ModelMappings\MeetingRoomMap.cs" />
+    <Compile Include="Data\Models\ModelMappings\MeetingRoomPropertyUpdateMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Users\AccountMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Users\ProfileMap.cs" />
     <Compile Include="Data\Models\ModelMappings\Users\RoleMap.cs" />
@@ -162,44 +184,36 @@
     <Compile Include="Data\Models\ViewModels\Base\EmptyViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Base\ViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\BookingViewModel.cs" />
+    <Compile Include="Data\Models\ViewModels\FloorViewModel.cs" />
+    <Compile Include="Data\Models\ViewModels\MeetingRoomPropertyUpdateLogViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\MeetingRoomViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\ProfileViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\RoleViewModel.cs" />
     <Compile Include="Data\Models\ViewModels\Users\SessionViewModel.cs" />
     <Compile Include="Data\Users\AuthLayer.cs" />
-    <Compile Include="Migrations\201612041641433_added_asset_value.cs" />
-    <Compile Include="Migrations\201612041641433_added_asset_value.Designer.cs">
-      <DependentUpon>201612041641433_added_asset_value.cs</DependentUpon>
+    <Compile Include="Migrations\201612102019527_migrationsReset.cs" />
+    <Compile Include="Migrations\201612102019527_migrationsReset.Designer.cs">
+      <DependentUpon>201612102019527_migrationsReset.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612041741178_user_entites.cs" />
-    <Compile Include="Migrations\201612041741178_user_entites.Designer.cs">
-      <DependentUpon>201612041741178_user_entites.cs</DependentUpon>
+    <Compile Include="Migrations\201612102124266_updateLog.cs" />
+    <Compile Include="Migrations\201612102124266_updateLog.Designer.cs">
+      <DependentUpon>201612102124266_updateLog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612041801052_role_functions.cs" />
-    <Compile Include="Migrations\201612041801052_role_functions.Designer.cs">
-      <DependentUpon>201612041801052_role_functions.cs</DependentUpon>
+    <Compile Include="Migrations\201612102125338_updateLog2.cs" />
+    <Compile Include="Migrations\201612102125338_updateLog2.Designer.cs">
+      <DependentUpon>201612102125338_updateLog2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612041806023_added_active_property_account.cs" />
-    <Compile Include="Migrations\201612041806023_added_active_property_account.Designer.cs">
-      <DependentUpon>201612041806023_added_active_property_account.cs</DependentUpon>
+    <Compile Include="Migrations\201612102138398_updateLog3.cs" />
+    <Compile Include="Migrations\201612102138398_updateLog3.Designer.cs">
+      <DependentUpon>201612102138398_updateLog3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612071018070_owner_to_booking.cs" />
-    <Compile Include="Migrations\201612071018070_owner_to_booking.Designer.cs">
-      <DependentUpon>201612071018070_owner_to_booking.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\DatabaseSeeder.cs" />
     <Compile Include="Misc\Attributes\Updatable.cs" />
+    <Compile Include="Misc\AuthHelper.cs" />
     <Compile Include="Misc\CustomPropertyTypes.cs" />
     <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612022112161_firstMigration.cs" />
-    <Compile Include="Migrations\201612022112161_firstMigration.Designer.cs">
-      <DependentUpon>201612022112161_firstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612022355000_nullable_numbers.cs" />
-    <Compile Include="Migrations\201612022355000_nullable_numbers.Designer.cs">
-      <DependentUpon>201612022355000_nullable_numbers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Misc\Exceptions\NotFoundException.cs" />
@@ -219,29 +233,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612022112161_firstMigration.resx">
-      <DependentUpon>201612022112161_firstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612022355000_nullable_numbers.resx">
-      <DependentUpon>201612022355000_nullable_numbers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612041641433_added_asset_value.resx">
-      <DependentUpon>201612041641433_added_asset_value.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612041741178_user_entites.resx">
-      <DependentUpon>201612041741178_user_entites.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612041801052_role_functions.resx">
-      <DependentUpon>201612041801052_role_functions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612041806023_added_active_property_account.resx">
-      <DependentUpon>201612041806023_added_active_property_account.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612071018070_owner_to_booking.resx">
-      <DependentUpon>201612071018070_owner_to_booking.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

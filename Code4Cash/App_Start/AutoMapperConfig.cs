@@ -13,7 +13,9 @@ namespace Code4Cash
         {
             Mapper.Initialize(cfg =>
             {
-                var mappingTypes = EntityViewModelMap<Entity, ViewModel>.GetAllEntityMaps();
+                var mappingTypes =
+                    EntityViewModelMap<Entity, ViewModel>.GetAllEntityMaps()
+                    .Where(type => typeof(IEntityViewModelMap).IsAssignableFrom(type));
 
                 mappingTypes.ToList().ForEach(mappingType =>
                 {
@@ -22,8 +24,7 @@ namespace Code4Cash
                     entityMap.ConfigureViewModelToEntityMapper(cfg);
                 });
 
-
             });
-        } 
+        }
     }
 }
