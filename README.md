@@ -11,3 +11,8 @@
 	- mai exact apelarea ultimului endpoint de pe pagina cu documentația cu unul din conturile user0, user1 ... user6 și parola "parola01"
 
 	- apoi, token-ul primit trebuie setat în partea de sus a paginii pentru a fi utilizat apoi în toate request-urile
+
+
+# UPDATE:
+	- am pus soluția pe un vps propriu și este accesibilă la adresa
+	- - http://code4cash.tdrs.me/swagger
